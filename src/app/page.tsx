@@ -10,6 +10,8 @@ import React from "react";
 import {CircularProgress} from "@nextui-org/progress";
 
 export default function Home() {
+  const baseURLTranslate = "https://api.mymemory.translated.net/get?q=pantat%20panci!&langpair=id|en"
+  const basURLFetch = "http://localhost:3000/api/kata"
 
   const [nama,setNama] = useState("")
   const [pemilik_tubuh, setPemilik_tubuh] = useState("")
@@ -47,7 +49,7 @@ export default function Home() {
     }
   }))
 
-  const submitName = (()=>{
+  const submitName =  (async ()=>{
     console.log("submit name")
     console.log(nama)
     console.log(khodam_value)
@@ -56,6 +58,11 @@ export default function Home() {
     khodam_value.current = setRandomLevel()
     setLabelKekuatan(khodam_value.current)
     setKhodam("Agus Botak")
+
+    const data = await fetch(basURLFetch)
+    console.log(data)
+    return (data)
+
   })
 
   const inputHandler = ((e:any)=>{
