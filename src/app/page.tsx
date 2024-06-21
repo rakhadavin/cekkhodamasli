@@ -4,7 +4,7 @@ import Image from "next/image";
 import Khodam from "./Khodam.jpg"
 import { useState } from "react";
 import { validateHeaderName } from "http";
-import ReactSpeedometer from "react-d3-speedometer/slim"
+import ReactSpeedometer from "react-d3-speedometer"
 import { setGlobal } from "next/dist/trace";
 export default function Home() {
 
@@ -50,7 +50,7 @@ export default function Home() {
     setPemilik_tubuh(nama)
     set_value(setRandomLevel())
     setLabelKekuatan(khodam_value)
-    setKhodam("Agus")
+    setKhodam("Agus Botak")
   })
 
   const inputHandler = ((e:any)=>{
@@ -65,7 +65,7 @@ export default function Home() {
 
 
   return (
-    <div className="w-100vw h-full text-white  font-serif flex items-center flex-col"  >
+    <div className="md:w-100vw w-full h-full text-white  font-serif flex items-center flex-col"  >
         <div style={{zIndex : -1, position:"fixed", width:"100%", height:"100%"}}>
           <Image src={Khodam} alt={""} layout="fill" objectFit="cover"/>
 
@@ -76,7 +76,7 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center align-middle  h-2100vh w-full bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-50 border border-gray-100  ">
               <h1 className=" font-serif flex font-extrabold subpixel-antialiased sm:text-6xl  text-4xl align-middle m-4  pt-8 
 ">CEK KHODAM MU DISINI</h1>
-<h4 className="capitalize font-light md:text-lg  text-sm  tracking-widest mx-4 ">Temukan kekuatan abadi yang tersembunyi dalam diri anda</h4>
+<h4 className="capitalize font-light md:text-lg  text-sm  tracking-widest mx-4 mb-4 ">Temukan kekuatan abadi yang tersembunyi dalam diri anda</h4>
             
       </div >
       
@@ -84,9 +84,9 @@ export default function Home() {
       {/* Content input */}
       
       <div className="flex flex-col gap-5 m-4 p-4  align-middle items-center
-h-full w-6/12 bg-gray-700 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 border border-gray-100
+h-full md:w-6/12 bg-gray-700 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40 border border-gray-100
 ">
-        <label htmlFor="nama" className="text-4xl">Nama Anda</label>
+        <label htmlFor="nama" className="md:text-4xl text-xl">Nama Anda</label>
         <div  className="flex align-middle items-center text-3xl text-amber-200 uppercase text-center  p-3 h-20  rounded-full font-bold bg-teal-950 border-slate-200  w-full gap-2">
 
             <input type="text" id="nama" name="nama"  value={nama} onChange={inputHandler} className="bg-transparent w-full h-full focus:border-0 focus:outline-none focus:ring focus:ring-0"  />
@@ -98,8 +98,8 @@ h-full w-6/12 bg-gray-700 rounded-md bg-clip-padding backdrop-filter backdrop-bl
           </button>
         </div>
       
-        <div className="font-normal font-mono text-3xl  text-slate-400">
-          Khodam dengan pemilik jiwa atas nama : <b className="tracking-wider text-amber-200"> 
+        <div className="font-normal font-mono md:text-3xl text-xl  text-slate-400">
+          Khodam dengan pemilik jiwa atas nama  <b className="tracking-wider text-amber-200 text-xl"> 
           {pemilik_tubuh}
             </b>
         </div>
@@ -110,12 +110,12 @@ h-full w-6/12 bg-gray-700 rounded-md bg-clip-padding backdrop-filter backdrop-bl
           </h1>
         </div>
 
-        <div className="flex items-center flex-row gap-4 h-full w-full bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-70 border border-gray-100 
+        <div className="flex items-center sm:shrink-0 sm:flex-row flex-col  gap-4 h-full w-full bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-70 border border-gray-100 
 " >
           <Image src="https://i.pinimg.com/564x/c1/8d/94/c18d94492403205ee1934aa2e6ddb860.jpg" alt={""} loading="lazy"  width={400} height={400} className="m-4 flex items-center md:w-5/12 w-10/12 "/>
-          <div className="items-center flex flex-col   md:w-5/6 w-1/12 justify-center   ">
-            <label htmlFor="">Seberapa Kuat Khodammu?</label>
-            <ReactSpeedometer className="sm:w-1 p-3 md:w-full  " minValue={0} maxValue={100}  value={khodam_value} currentValueText={khodam_level} labelFontSize={20} valueTextFontSize={20} customSegmentStops={segmentStopLevel} width={300} ringWidth={30}/>
+          <div className="items-center flex flex-col flex-wrap  md:w-3/6 w-1/12 justify-center  ">
+            <p  className="md:text-l text-s w-full align-middle items-center md:text-center " >Seberapa Kuat Khodammu?</p>
+            <ReactSpeedometer  minValue={0} maxValue={100}  value={khodam_value} currentValueText={khodam_level} customSegmentStops={segmentStopLevel} width={300} ringWidth={30}/>
           </div>
         </div>
 
