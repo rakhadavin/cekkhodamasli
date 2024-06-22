@@ -57,11 +57,13 @@ export default function Home() {
     setPemilik_tubuh(nama)
     khodam_value.current = setRandomLevel()
     setLabelKekuatan(khodam_value.current)
-    setKhodam("Agus Botak")
+    setKhodam("Loading..")
 
-    const data = await fetch(basURLFetch)
-    console.log(data)
-    return (data)
+    const data = await ( await fetch(basURLFetch)).json()
+    const nama_khodam = {data}.data.nama_khodam
+    console.log(  nama_khodam )
+    setKhodam(nama_khodam)
+    return (nama_khodam)
 
   })
 
@@ -117,7 +119,7 @@ h-full md:w-6/12 bg-gray-700 rounded-md bg-clip-padding backdrop-filter backdrop
         </div>
 
         <div>
-          <h1 className="md:text-4xl text-center w-full border-2 text-wrap text-lg font-extrabold text-yellow-200">
+          <h1 className="md:text-4xl text-center w-full text-wrap text-lg font-extrabold text-yellow-200">
           {khodam}
           </h1>
         </div>
@@ -125,7 +127,7 @@ h-full md:w-6/12 bg-gray-700 rounded-md bg-clip-padding backdrop-filter backdrop
         <div className="flex items-center   md:flex-row flex-col gap-4 h-full w-full bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-70 border border-gray-100 
 " >
           <Image src="https://i.pinimg.com/564x/c1/8d/94/c18d94492403205ee1934aa2e6ddb860.jpg" alt={""} loading="lazy"  width={400} height={400} className="m-4 flex items-center md:w-5/12 w-10/12 "/>
-          <div className="items-center flex flex-col flex-wrap  md:w-3/6 w-full justify-center border-2 ">
+          <div className="items-center flex flex-col flex-wrap  md:w-3/6 w-full justify-center  ">
             <p  className="md:text-l text-s w-full align-middle items-center text-center " >Seberapa Kuat Khodammu?</p>
             <h2 className="md:text-xl font-bold text-green-600 text-center">{khodam_level}</h2>
           
@@ -136,7 +138,7 @@ h-full md:w-6/12 bg-gray-700 rounded-md bg-clip-padding backdrop-filter backdrop
             track: "stroke-white/10",
             value: "text-3xl font-semibold text-white",
           }}
-          className="border-2"
+          className=""
           value={khodam_value.current}
           strokeWidth={3}
           showValueLabel={true}
