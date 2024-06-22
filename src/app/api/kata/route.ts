@@ -3,9 +3,8 @@ import { Pool } from "@neondatabase/serverless"
 import { json } from "stream/consumers"
 import { Container } from "postcss"
 
-export const config ={
-    runtime : 'edge',
-}
+
+export const runtime = "edge"
 
 export async function GET(req:NextRequest , event:NextFetchEvent) {
 
