@@ -11,7 +11,7 @@ import {CircularProgress} from "@nextui-org/progress";
 
 export default function Home() {
   const baseURLTranslate = "https://api.mymemory.translated.net/get?q=pantat%20panci!&langpair=id|en"
-  const basURLFetch = "cekkhodamasli.vercel.app/api/kata"
+  const basURLFetch = "https://cekkhodamasli.vercel.app//api/kata"
 
   const [nama,setNama] = useState("")
   const [pemilik_tubuh, setPemilik_tubuh] = useState("")
