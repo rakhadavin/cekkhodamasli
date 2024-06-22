@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Khodam from "./Khodam.jpg"
 import { useRef, useState } from "react";
-import { validateHeaderName } from "http";
+import { validateHeaderName, validateHeaderValue } from "http";
 import ReactSpeedometer from "react-d3-speedometer"
 import { setGlobal } from "next/dist/trace";
 import React from "react";
@@ -15,55 +15,57 @@ export default function Home() {
 
   const [nama,setNama] = useState("")
   const [pemilik_tubuh, setPemilik_tubuh] = useState("")
-  const [khodam, setKhodam] = useState("Tidak Ada Khodam")
-  const segmentStopLevel:number[] = [0,20,40,60,80,100]
-  const [khodam_level, setLevel] = useState("Sangat Lemah")
-  // const [khodam_value, set_value] = useState(0)
+  const [khodam, setKhodam] = useState("")
+  const [penjelasan, setPenjelasan] = useState("")
+  const khodam_level = useRef("Sangat Lemah")
   const khodam_value = useRef(0)
 
   const setRandomLevel = (()=>{
     const randomValue = Math.floor(Math.random() * 100)
+    console.log(randomValue)
     return randomValue
   })
 
   const setLabelKekuatan  = (((value:number)=>{
     if(value <= 0){}
     else if(value > 20 && value < 40){
-      setLevel("Lemah")
+      khodam_level.current = ("Lemah")
     }
     else if(value > 40 && value < 60){
-      setLevel("Biasa Saja")
+      khodam_level.current = ("Biasa Saja")
 
     }
     else if(value > 60 && value < 80) {
-      setLevel("Cukup Kuat")
+      khodam_level.current = ("Cukup Kuat")
 
     }
     else if(value > 80 && value < 90){
-      setLevel("Sangat Kuat")
+      khodam_level.current = ("Sangat Kuat")
 
     }
     else if(value >= 90){
-      setLevel("Penguasa Leluhur")
+      khodam_level.current = ("Penguasa Leluhur")
 
     }
   }))
 
   const submitName =  (async ()=>{
-    console.log("submit name")
-    console.log(nama)
-    console.log(khodam_value)
-    console.log(khodam_level)
     setPemilik_tubuh(nama)
+    setKhodam("Loading..")
+    
+    //SON.stringify(data.data_khodam) --> sloved from Error: Objects are not valid as a React child (found: object with keys {nama, penjelasan}). If you meant to render a collection of children, use an array instead.
+    const data = await ( await fetch(basURLFetch)).json() 
+    const data_khodam = JSON.stringify(data.data_khodam)
+    const nama_khodam = data.data_khodam.nama
+    const penjelasan = data.data_khodam.penjelasan
+    console.log(  data_khodam )
+    setKhodam(nama_khodam)
+    setPenjelasan(penjelasan)
     khodam_value.current = setRandomLevel()
     setLabelKekuatan(khodam_value.current)
-    setKhodam("Loading..")
 
-    const data = await ( await fetch(basURLFetch)).json()
-    const nama_khodam = {data}.data.nama_khodam
-    console.log(  nama_khodam )
-    setKhodam(nama_khodam)
-    return (nama_khodam)
+
+    return (data_khodam)
 
   })
 
@@ -77,6 +79,9 @@ export default function Home() {
 
 
 
+  const loadingHadnler = ((e:any)=>{
+
+  })
 
   return (
     <div className="md:w-100vw w-full h-full text-white  font-serif flex items-center flex-col"  >
@@ -118,18 +123,28 @@ h-full md:w-6/12 bg-gray-700 rounded-md bg-clip-padding backdrop-filter backdrop
             </b>
         </div>
 
-        <div>
-          <h1 className="md:text-4xl text-center w-full text-wrap text-lg font-extrabold text-yellow-200">
+        <div className="flex flex-col items-center text-center mb-9">
+          <h1 className="md:text-4xl text-center w-full text-wrap text-lg font-extrabold text-yellow-200 capitalize">
           {khodam}
           </h1>
+
+          <p className="md:text-xl text-normal w-4/6 text-center">{penjelasan}</p>
         </div>
 
-        <div className="flex items-center   md:flex-row flex-col gap-4 h-full w-full bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-70 border border-gray-100 
+        <div className="flex  items-center justify-centerti md:flex-row flex-col gap-4 h-full w-full bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-70 border border-gray-100 
 " >
-          <Image src="https://i.pinimg.com/564x/c1/8d/94/c18d94492403205ee1934aa2e6ddb860.jpg" alt={""} loading="lazy"  width={400} height={400} className="m-4 flex items-center md:w-5/12 w-10/12 "/>
-          <div className="items-center flex flex-col flex-wrap  md:w-3/6 w-full justify-center  ">
-            <p  className="md:text-l text-s w-full align-middle items-center text-center " >Seberapa Kuat Khodammu?</p>
-            <h2 className="md:text-xl font-bold text-green-600 text-center">{khodam_level}</h2>
+          {/* <Image src="https://i.pinimg.com/564x/c1/8d/94/c18d94492403205ee1934aa2e6ddb860.jpg" alt={""} loading="lazy"  width={400} height={400} className="m-4 flex items-center md:w-5/12 w-10/12 "/> */}
+          
+          {/* md:w-3/6  untuk ukuran meteran jika sudah ada gambar */}
+          <div className="items-center flex flex-col flex-wrap w-full justify-center  p-4">
+            <p  className="md:text-3xl text-s w-full align-middle items-center text-center " >Seberapa Kuat Khodammu?</p>
+
+            <div className="flex flex-row gap-y-2 mb-9 items-center ">
+
+            <img width="36" height="36" src="https://img.icons8.com/fluency/48/spam.png" alt="spam" className="mx-2"/>
+            <p className="md:text-lg  text-sm font-extralight text-slate-400 text-justify">Kekuatan khodam bisa berubah sesuai mood khodam nya</p>
+            </div>
+            <h2 className="md:text-xl font-bold text-green-600 text-center">{khodam_level.current}</h2>
           
         <CircularProgress
           classNames={{
@@ -142,6 +157,7 @@ h-full md:w-6/12 bg-gray-700 rounded-md bg-clip-padding backdrop-filter backdrop
           value={khodam_value.current}
           strokeWidth={3}
           showValueLabel={true}
+          onLoad={loadingHadnler}
         />
       
           </div>
@@ -163,8 +179,8 @@ h-full md:w-6/12 bg-gray-700 rounded-md bg-clip-padding backdrop-filter backdrop
 
 
 
-      <div>
-        Created by Daveen | rakha.davin_alamsyah
+      <div className="m-6 flex flex-row items-center ">
+        Created by Daveen | <a target="blank" href="https://www.instagram.com/rakha.davin_alamsyah/"><img width="40" height="40" src="https://img.icons8.com/papercut/60/instagram-new.png" alt="instagram-new"/></a>
       </div>
 
 

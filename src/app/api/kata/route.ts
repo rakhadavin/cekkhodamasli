@@ -15,19 +15,21 @@ export async function GET(req:NextRequest , event:NextFetchEvent) {
     
     const jml_kata_benda = (await pool.query('select  count(id) from kata_benda;')).rows[0].count
     const jml_kata_sifat = (await pool.query('select  count(id) from kata_sifat;')).rows[0].count
+    const jml_duakatalucu = (await pool.query('select  count(id) from duakatalucu;')).rows[0].count
     const id_benda = Math.floor(Math.random() * 100) % Number(jml_kata_benda)
     const id_sifat = Math.floor(Math.random() * 100) % Number(jml_kata_sifat)
+    const id_duakatalucu = Math.floor(Math.random() * 100) % Number(jml_duakatalucu)
 
 
 
-    const query = `select concat_ws(' ', kata_benda,kata_sifat) from kata_sifat, kata_benda where kata_benda.id = ${id_benda} and kata_sifat.id = ${id_sifat};` 
-    const nama_khodam = (await pool.query(query)).rows[0].concat_ws
+    const query = `select nama , penjelasan from duakatalucu where id = ${id_duakatalucu}` 
+    const data_khodam = (await pool.query(query)).rows[0]
     console.log("Lolos 2")
-    console.log(nama_khodam)
+    console.log(data_khodam)
     
     pool.end()
 
 
-    return new Response(JSON.stringify({nama_khodam}),{status:200})
+    return new Response(JSON.stringify({data_khodam}),{status:200})
     // return JSON.parse(data)
 }
