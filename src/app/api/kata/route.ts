@@ -4,7 +4,7 @@ import { json } from "stream/consumers"
 import { Container } from "postcss"
 
 
-export const runtime = "edge"
+export const runtime = 'edge'
 
 export async function GET(req:NextRequest , event:NextFetchEvent) {
 
