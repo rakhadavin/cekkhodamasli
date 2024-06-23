@@ -8,6 +8,8 @@ import ReactSpeedometer from "react-d3-speedometer"
 import { setGlobal } from "next/dist/trace";
 import React from "react";
 import {CircularProgress} from "@nextui-org/progress";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   const baseURLTranslate = "https://api.mymemory.translated.net/get?q=pantat%20panci!&langpair=id|en"
@@ -50,26 +52,46 @@ export default function Home() {
   }))
 
   const submitName =  (async ()=>{
-    setPemilik_tubuh(nama)
-    setKhodam("Loading..")
-    
-    //SON.stringify(data.data_khodam) --> sloved from Error: Objects are not valid as a React child (found: object with keys {nama, penjelasan}). If you meant to render a collection of children, use an array instead.
-    
-    try{
-      const data = await ( await fetch(basURLFetch)).json()
-      console.log(data.data_khodam["nama"])
-      const nama_khodam = data.data_khodam["nama"]
-      const penjelasan = data.data_khodam["penjelasan"]
-      setKhodam(nama_khodam)
-      setPenjelasan(penjelasan)
-      
-      khodam_value.current = setRandomLevel()
-      setLabelKekuatan(khodam_value.current)
-      return (data.data_khodam)
 
-    }catch(e){
-      console.log(e)
+    if (nama !== ""){
+
+      setPemilik_tubuh(nama)
+      setKhodam("Loading..")
+      
+      //SON.stringify(data.data_khodam) --> sloved from Error: Objects are not valid as a React child (found: object with keys {nama, penjelasan}). If you meant to render a collection of children, use an array instead.
+      
+      try{
+        const data = await ( await toast.promise(fetch(basURLFetch),{  
+          pending: 'Sedang Memasuki Dunia Lain  ( Butuh waktu beberapa detik, silakan tunggu )',
+          success: 'Khodam Terdeteksi 👌',
+          error: 'Kamu Tidak Ada Khodam 🤯, Yuk Tanam Khodam !'
+        
+        })).json()
+        console.log(data.data_khodam["nama"])
+        const nama_khodam = data.data_khodam["nama"]
+        const penjelasan = data.data_khodam["penjelasan"]
+        setKhodam(nama_khodam)
+        setPenjelasan(penjelasan)
+        
+        khodam_value.current = setRandomLevel()
+        setLabelKekuatan(khodam_value.current)
+        return (data.data_khodam)
+
+      }catch(e){
+        console.log(e)
+      }
+
+
+    }else{
+      const notify = () =>
+      
+      toast.error("Nama Lu Kosong bro ?.ga ush lah ngetes- ngetes web gua !", {
+        position: "top-left",
+        theme: "dark",
+      });
+      notify()
     }
+
 
 
 
@@ -91,6 +113,8 @@ export default function Home() {
 
   return (
     <div className="md:w-100vw w-full h-full text-white  font-serif flex items-center flex-col"  >
+      <ToastContainer />
+
         <div style={{zIndex : -1, position:"fixed", width:"100%", height:"100%"}}>
           <Image src={Khodam} alt={""} layout="fill" objectFit="cover" loading="lazy"/>
 
