@@ -61,10 +61,7 @@ export default function Home() {
       //SON.stringify(data.data_khodam) --> sloved from Error: Objects are not valid as a React child (found: object with keys {nama, penjelasan}). If you meant to render a collection of children, use an array instead.
       
       try{
-        const data = await ( await toast.promise(fetch(basURLFetch),{  
-     
-        
-        })).json()
+        const data = await ( await(fetch(basURLFetch))).json()
         console.log(data.data_khodam["nama"])
         const nama_khodam = data.data_khodam["nama"]
         const penjelasan = data.data_khodam["penjelasan"]
