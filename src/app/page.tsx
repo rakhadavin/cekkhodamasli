@@ -11,7 +11,7 @@ import {CircularProgress} from "@nextui-org/progress";
 
 export default function Home() {
   const baseURLTranslate = "https://api.mymemory.translated.net/get?q=pantat%20panci!&langpair=id|en"
-  const basURLFetch = "https://cekkhodamasli.vercel.app//api/kata"
+  const basURLFetch = "http://localhost:3000//api/kata"
 
   const [nama,setNama] = useState("")
   const [pemilik_tubuh, setPemilik_tubuh] = useState("")
@@ -54,21 +54,24 @@ export default function Home() {
     setKhodam("Loading..")
     
     //SON.stringify(data.data_khodam) --> sloved from Error: Objects are not valid as a React child (found: object with keys {nama, penjelasan}). If you meant to render a collection of children, use an array instead.
-    const data = await ( await fetch(basURLFetch,{
-      mode:  'no-cors' 
-     
-    })).json() 
-    const data_khodam = JSON.stringify(data.data_khodam)
-    const nama_khodam = data.data_khodam.nama
-    const penjelasan = data.data_khodam.penjelasan
-    console.log(  data_khodam )
-    setKhodam(nama_khodam)
-    setPenjelasan(penjelasan)
-    khodam_value.current = setRandomLevel()
-    setLabelKekuatan(khodam_value.current)
+    
+    try{
+      const data = await ( await fetch(basURLFetch)).json()
+      console.log(data.data_khodam["nama"])
+      const nama_khodam = data.data_khodam["nama"]
+      const penjelasan = data.data_khodam["penjelasan"]
+      setKhodam(nama_khodam)
+      setPenjelasan(penjelasan)
+      
+      khodam_value.current = setRandomLevel()
+      setLabelKekuatan(khodam_value.current)
+      return (data.data_khodam)
+
+    }catch(e){
+      console.log(e)
+    }
 
 
-    return (data_khodam)
 
   })
 

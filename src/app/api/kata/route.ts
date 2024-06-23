@@ -7,7 +7,7 @@ import { Container } from "postcss"
 export const runtime = 'edge'
 
 export async function GET(req:NextRequest , event:NextFetchEvent) {
-
+    console.log(req)
     const pool = new Pool({
         connectionString : process.env.DATABASE_URL
     })
