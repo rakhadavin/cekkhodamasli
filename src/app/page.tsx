@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   const baseURLTranslate = "https://api.mymemory.translated.net/get?q=pantat%20panci!&langpair=id|en"
-  const basURLFetch = "https://cekkhodamasli.vercel.app///api/kata"
+  const basURLFetch = "http://localhost:3000///api/kata"
 
   const [nama,setNama] = useState("")
   const [pemilik_tubuh, setPemilik_tubuh] = useState("")
@@ -57,7 +57,6 @@ export default function Home() {
 
       setPemilik_tubuh(nama)
       setKhodam("Loading..")
-      
       //SON.stringify(data.data_khodam) --> sloved from Error: Objects are not valid as a React child (found: object with keys {nama, penjelasan}). If you meant to render a collection of children, use an array instead.
       
       try{
@@ -94,13 +93,9 @@ export default function Home() {
 
   const inputHandler = ((e:any)=>{
     setNama(e.target.value)
-    console.log(e)
-    console.log(nama)
+
 
   })
-
-
-
 
   const loadingHadnler = ((e:any)=>{
 
