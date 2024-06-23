@@ -54,7 +54,17 @@ export default function Home() {
     setKhodam("Loading..")
     
     //SON.stringify(data.data_khodam) --> sloved from Error: Objects are not valid as a React child (found: object with keys {nama, penjelasan}). If you meant to render a collection of children, use an array instead.
-    const data = await ( await fetch(basURLFetch)).json() 
+    const data = await ( await fetch(basURLFetch,{
+      mode:  'cors' ,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        key1: 'value1',
+        key2: 'value2'
+      })
+    })).json() 
     const data_khodam = JSON.stringify(data.data_khodam)
     const nama_khodam = data.data_khodam.nama
     const penjelasan = data.data_khodam.penjelasan
