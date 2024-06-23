@@ -62,9 +62,7 @@ export default function Home() {
       
       try{
         const data = await ( await toast.promise(fetch(basURLFetch),{  
-          pending: 'Sedang Memasuki Dunia Lain  ( Butuh waktu beberapa detik, silakan tunggu )',
-          success: 'Khodam Terdeteksi 👌',
-          error: 'Kamu Tidak Ada Khodam 🤯, Yuk Tanam Khodam !'
+     
         
         })).json()
         console.log(data.data_khodam["nama"])
