@@ -13,7 +13,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   const baseURLTranslate = "https://api.mymemory.translated.net/get?q=pantat%20panci!&langpair=id|en"
-  const basURLFetch = "https://cekkhodamasli.vercel.app///api/kata"
+  let basURLFetch = "https://cekkhodamasli.vercel.app///api/kata"
+  const basURLFetch_desktop = "http://localhost:3000///api/kata"
+
+  
 
   const [nama,setNama] = useState("")
   const [pemilik_tubuh, setPemilik_tubuh] = useState("")
@@ -53,6 +56,7 @@ export default function Home() {
 
   const submitName =  (async ()=>{
 
+
     if (nama !== ""){
 
       setPemilik_tubuh(nama)
@@ -60,6 +64,11 @@ export default function Home() {
       //SON.stringify(data.data_khodam) --> sloved from Error: Objects are not valid as a React child (found: object with keys {nama, penjelasan}). If you meant to render a collection of children, use an array instead.
       
       try{
+    console.log(window.innerWidth)
+    if (window.innerWidth > 768) { // Ubah nilai 768 sesuai dengan lebar yang dianggap sebagai desktop
+      basURLFetch = basURLFetch_desktop
+  }
+
         const data = await ( await(fetch(basURLFetch))).json()
         console.log(data.data_khodam["nama"])
         const nama_khodam = data.data_khodam["nama"]
@@ -72,14 +81,14 @@ export default function Home() {
         return (data.data_khodam)
 
       }catch(e){
-        console.log(e)
+        console.log("Error Message : ",e)
       }
 
 
     }else{
       const notify = () =>
       
-      toast.error("Nama Lu Kosong bro ?.ga ush lah ngetes- ngetes web gua !", {
+      toast.error("Nama tidak boleh kosong !", {
         position: "top-left",
         theme: "dark",
       });
@@ -113,9 +122,9 @@ export default function Home() {
         </div>
 
       <div className="flex flex-col items-center justify-center align-middle  h-2100vh w-full bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-50 border border-gray-100  ">
-              <h1 className=" font-serif flex font-extrabold subpixel-antialiased sm:text-5xl  text-2xl align-middle m-4  pt-8 
+              <h1 className=" text-left md:text-center font-serif flex font-extrabold subpixel-antialiased sm:text-5xl  text-2xl align-middle m-4  pt-8 
 ">CEK KHODAM MU DISINI</h1>
-<h4 className="capitalize font-light md:text-lg  text-sm  tracking-widest mx-4 mb-4 ">Temukan kekuatan abadi yang tersembunyi dalam diri anda</h4>
+<h4 className="capitalize font-light md:text-lg  text-sm  tracking-widest mx-4 mb-4 text-left ">Temukan kekuatan abadi yang tersembunyi dalam diri anda</h4>
             
       </div >
       
@@ -130,7 +139,7 @@ h-full md:w-6/12 bg-gray-700 rounded-md bg-clip-padding backdrop-filter backdrop
 
             <input type="text" id="nama" name="nama"  value={nama} onChange={inputHandler} className="bg-transparent w-full h-full focus:border-0 focus:outline-none focus:ring focus:ring-0"  />
             <button
-            className="select-none rounded-full bg-amber-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md shadow-amber-500/20 transition-all hover:shadow-lg hover:shadow-amber-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            className="select-none rounded-full bg-amber-500 onclick:bg-amber-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md shadow-amber-500/20 transition-all hover:shadow-lg hover:shadow-amber-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             type="button" onClick={submitName} 
           >
             CHECK NOW

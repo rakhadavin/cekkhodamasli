@@ -7,7 +7,6 @@ import { Container } from "postcss"
 export const runtime = 'edge'
 
 export async function GET(req:NextRequest , event:NextFetchEvent) {
-    console.log(req)
     const pool = new Pool({
         connectionString : process.env.DATABASE_URL
     })
@@ -23,8 +22,7 @@ export async function GET(req:NextRequest , event:NextFetchEvent) {
 
     const query = `select nama , penjelasan from duakatalucu where id = ${id_duakatalucu}` 
     const data_khodam = (await pool.query(query)).rows[0]
-    console.log("Lolos 2")
-    console.log(data_khodam)
+
     
     pool.end()
 
