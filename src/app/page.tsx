@@ -57,7 +57,7 @@ export default function Home() {
   const submitName =  (async ()=>{
 
 
-    if (nama !== ""){
+    if (nama !== "" && pemilik_tubuh !== nama){
 
       setPemilik_tubuh(nama)
       setKhodam("Loading..")
@@ -87,12 +87,20 @@ export default function Home() {
 
 
     }else{
-      const notify = () =>
+      const notify = () =>{
+      if(pemilik_tubuh === nama){
+        toast.warn(`Saat ini khodam ${pemilik_tubuh.toString().toLocaleUpperCase()} adalah ${khodam.toString().toLocaleUpperCase()}, harap tunggu beberapa saat untuk melihat perubahan khodam !`, {
+          position: "top-left",
+          theme: "light",
+        });
+
+      }else{
+        toast.error("Nama tidak boleh kosong !", {
+          position: "top-left",
+          theme: "dark",
+        })}
+      }
       
-      toast.error("Nama tidak boleh kosong !", {
-        position: "top-left",
-        theme: "dark",
-      });
       notify()
     }
 
