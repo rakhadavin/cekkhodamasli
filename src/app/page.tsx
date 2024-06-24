@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Home() {
   const baseURLTranslate = "https://api.mymemory.translated.net/get?q=pantat%20panci!&langpair=id|en"
   let basURLFetch = "https://cekkhodamasli.vercel.app///api/kata"
-  const basURLFetch_desktop = "http://localhost:3000///api/kata"
+  const basURLFetch_desktop = "http://localhost:3000//api/kata"
 
   
 
