@@ -71,6 +71,7 @@ export default function Home() {
 
         const data = await ( await(fetch(basURLFetch))).json()
         console.log(data.data_khodam["nama"])
+        console.log(basURLFetch)
         const nama_khodam = data.data_khodam["nama"]
         const penjelasan = data.data_khodam["penjelasan"]
         setKhodam(nama_khodam)
