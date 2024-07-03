@@ -17,7 +17,8 @@ const nextConfig = {
       },
     images:{
         domains:[
-            "https://cekkhodamasli.vercel.app/"
+            "https://cekkhodamasli.vercel.app/",
+            "https://img.icons8.com"
         ],
         
         remotePatterns:[
