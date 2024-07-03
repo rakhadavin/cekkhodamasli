@@ -64,10 +64,7 @@ export default function Home() {
       //SON.stringify(data.data_khodam) --> sloved from Error: Objects are not valid as a React child (found: object with keys {nama, penjelasan}). If you meant to render a collection of children, use an array instead.
 
       try {
-        console.log(window.innerWidth)
-        if (window.innerWidth > 768) { // Ubah nilai 768 sesuai dengan lebar yang dianggap sebagai desktop
-          basURLFetch = basURLFetch_desktop
-        }
+     
 
         const data = await (await (fetch(basURLFetch))).json()
         console.log(data.data_khodam["nama"])
